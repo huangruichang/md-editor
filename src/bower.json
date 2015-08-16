@@ -1,0 +1,11 @@
+{
+	"name": "md-editor",
+	"version": "0.0.0",
+	"dependencies": {
+		"font-awesome": "~4.3.0",
+		"jquery": "~2.1.1",
+		"lodash": "3.5.0",
+		"marked": "0.3.4",
+		"pagedown-for-coding": "git://github.com/bluishoul/PageDown#a8484a6fb5a57869816c949757f7fcbe0bab743c"
+	}
+}

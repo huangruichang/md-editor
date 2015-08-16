@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css"/>
+	<link rel="stylesheet" href="styles/main.css"/>
+	<link rel="stylesheet" href="styles/modal.css"/>
+	<link rel="stylesheet" href="styles/markdown.css" />
+</head>
+<body>
+	<div class="wmd-panel">
+        <div id="wmd-button-bar"></div>
+        <div class="pagedown-editor">
+	        <textarea class="wmd-input" id="wmd-input"></textarea>
+			<div class="extend-wmd-button"
+				style="right: 15px;" title="帮助">
+				<i class="fa fa-question-circle"></i>
+			</div>
+			<div class="extend-wmd-button open-preview-button"
+	             style="right: 45px;">
+	            <i class="fa fa-eye" title="打开预览"></i>
+	        </div>
+	        <div class="extend-wmd-button close-preview-button"
+	        	 style="right: 45px;display: none;">
+				<i class="fa fa-eye-slash" title="关闭预览"></i>	        	
+	        </div>
+	        <div class="extend-wmd-button expand-mode-button"
+	             style="right: 75px;">
+	            <i class="fa fa-expand" title="半屏预览模式"></i>
+	        </div>
+	        <div class="extend-wmd-button compress-mode-button"
+	        	 style="right: 75px;display: none;">
+	        	<i class="fa fa-compress" title="全屏预览模式"></i>
+	        </div>
+		    <div id="pagedown-preview" class="pagedown-preview markdown content">
+		    		
+		    </div>
+		</div>
+
+    </div>
+
+    
+
+    <!-- help modal start -->
+    <div class="pagedown-help-modal" id="pagedown-help-modal" style="display: none">
+		<div class="content">
+		    <table>
+		        <tr>
+		            <td><i class="photo icon"></i>图片</td>
+		            <td>![描述](example.jpg)</td>
+		            <td><span cg-cmd-ctr></span> + G</td>
+		        </tr>
+		        <tr>
+		            <td><i class="url icon"></i>链接</td>
+		            <td>[描述](https://coding.net)</td>
+		            <td><span cg-cmd-ctr></span> + L</td>
+		        </tr>
+		        <tr>
+		            <td><i class="bold icon" style="margin-right: 0;"></i>/<i class="italic icon"></i>强调</td>
+		            <td>*斜体* 和 **粗体**</td>
+		            <td><span cg-cmd-ctr></span> + B 和 <span cg-cmd-ctr></span> + I</td>
+		        </tr>
+		        <tr>
+		            <td><i class="heading icon"></i>标题</td>
+		            <td># 一级标题 <br> ## 二级标题 <br>...<br> ##### 五级标题</td>
+		            <td><span cg-cmd-ctr></span> + H</td>
+		        </tr>
+		        <tr>
+		            <td><i class="quote left icon"></i>引用</td>
+		            <td>&gt; 一级引用 <br> &gt;&gt; 二级引用</td>
+		            <td><span cg-cmd-ctr></span> + Q</td>
+		        </tr>
+		        <tr>
+		            <td><i class="ordered list icon"></i>列表</td>
+		            <td>
+		                <div class="wrapper">
+		                    <div class="left">
+		                        1. 有序列表1 <br>
+		                        2. 有序列表2 <br>
+		                        3. 有序列表3
+		                    </div>
+		                    <div class="right">
+		                        - 无序列表1 <br>
+		                        - 无序列表2 <br>
+		                        - 无序列表3
+		                    </div>
+		                </div>
+		            </td>
+		            <td><span cg-cmd-ctr></span> + O 和 <span cg-cmd-ctr></span> + U</td>
+		        </tr>
+		        <tr>
+		            <td><i class="code icon"></i>代码</td>
+		            <td>
+		                <div class="wrapper">
+		                    <div class="left">
+		                        行内代码：<br>
+		                        `var a = 1;`<br>
+		                    </div>
+		                    <div class="right">
+		                        代码块：<br>```ruby<br>print 'Hello Coding'<br>```
+		                    </div>
+		                </div>
+		            </td>
+		            <td><span cg-cmd-ctr></span> + K</td>
+		        </tr>
+		        <tr>
+		            <td><i class="table icon"></i>表格</td>
+		            <td>
+		                <pre>First Header | Second Header | Third Header
+		:----------- | :-----------: | -----------:
+		 Left        |     Center    |       Right</pre>
+		             </td>
+		            <td></td>
+		        </tr>
+		    </table>
+		</div>
+	</div>
+    <!-- help modal end -->
+</body>
+
+
+<script type="text/javascript" src="scripts/renderer/init.js"></script>
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="bower_components/pagedown-for-coding/Markdown.Converter.js"></script>
+<script type="text/javascript" src="bower_components/pagedown-for-coding/Markdown.Sanitizer.js"></script>
+<script type="text/javascript" src="bower_components/pagedown-for-coding/Markdown.Editor.js"></script>
+<script type="text/javascript" src="bower_components/pagedown-for-coding/Markdown.Extra.js"></script>
+<script type="text/javascript" src="bower_components/lodash/lodash.js"></script>
+<script type="text/javascript" src="bower_components/marked/lib/marked.js"></script>
+<script type="text/javascript" src="scripts/renderer/imageMarked.js"></script>
+<script type="text/javascript" src="scripts/renderer/textarea.ext.js"></script>
+<script type="text/javascript" src="scripts/renderer/scroll.ext.js"></script>
+<script type="text/javascript" src="scripts/renderer/app.js"></script>
+<script type="text/javascript" src="scripts/renderer/receiver.js"></script>
+</html>

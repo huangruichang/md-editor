@@ -1,0 +1,10 @@
+{
+	"name": "md-editor",
+	"version": "0.0.0",
+	"main": "main.js",
+	"dependencies": {},
+	"devDependencies": {
+		"gulp": "^3.8.11",
+		"gulp-electron": "^0.0.8"
+	}
+}
