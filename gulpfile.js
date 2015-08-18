@@ -1,27 +1,16 @@
 var gulp = require('gulp');
 var electron = require('gulp-electron');
-var packageJson = require('./src/package.json');
+var gulpAtom = require('gulp-atom');
 
-gulp.task('electron', function () {
-	gulp.src("")
-	.pipe(electron({
-		src: './src',
-		packageJson: packageJson,
-		release: './release',
-		cache: './cache',
-		version: 'v0.26.1',
-		packaging: true,
-		platforms: ['darwin','win32','linux'],
-		platformResources: {
-			win: {
-				"version-string": packageJson.version,
-				"file-version": packageJson.version,
-				"product-version": packageJson.version,
-				"icon": 'gulp-electron.ico'
-			}
-		}
-	}))
-	.pipe(gulp.dest(""));
+gulp.task('atom', function () {
+	return gulpAtom({
+		srcPath: './src',
+		releasePath: './release',
+		cachePath: './cache',
+		version: 'v0.30.4',
+		rebuild: false,
+		platforms: ['win32-ia32', 'darwin-x64']
+	});
 });
 
-gulp.task('default', ['electron']);
+gulp.task('default', ['atom']);

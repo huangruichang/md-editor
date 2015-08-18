@@ -5,6 +5,6 @@
 	"dependencies": {},
 	"devDependencies": {
 		"gulp": "^3.8.11",
-		"gulp-electron": "^0.0.8"
+		"gulp-atom": "^0.1.0"
 	}
 }

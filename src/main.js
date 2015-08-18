@@ -51,7 +51,6 @@ var filters = [
 ];
 
 var openFile = function (event, arg) {
-  console.log(arg);
   var filePath = '';
   if (arg) {
     filePath = arg;
@@ -90,7 +89,8 @@ var newFile = function (event, arg) {
           buttons: []
         });
       }
-      fs.writeFile(filePath, '', function (err, data) {
+      var content = arg || '';
+      fs.writeFile(filePath, content, function (err, data) {
         if (err) throw err;
         event.sender.send('md.file.create.success', '', filePath);
       });
@@ -99,12 +99,16 @@ var newFile = function (event, arg) {
 };
 
 var saveFile = function (event, data) {
-  if (!data || !data.file_path) return;
-  var file_path = data.file_path;
-  var content = data.content ? data.content : '';
-  fs.writeFile(file_path, content, function (err, data) {
-    if (err) {
-      dialog.showErrorBox('save failed! :(');
-    }
-  });
+  if (!data) return;
+  if (data.file_path) {
+    var file_path = data.file_path;
+    var content = data.content ? data.content : '';
+    fs.writeFile(file_path, content, function (err, data) {
+      if (err) {
+        dialog.showErrorBox('save failed! :(');
+      }
+    });
+  } else {
+    newFile(event, data.content);
+  }
 };
