@@ -6,6 +6,135 @@ var fs = require('fs');
 
 require('crash-reporter').start();
 
+var Menu = require('menu');
+
+var file_path = '';
+
+var template = [
+  {
+    label: 'File',
+    submenu: [
+      {
+        label: 'New File',
+        click: function () {
+          doAction('newFile');
+        }
+      },
+      {
+        label: 'Open File',
+        click: function () {
+          doAction('openFile');
+        }
+      },
+      {
+        label: 'Save',
+        click: function () {
+          doAction('saveFile');
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'New Window',
+        click: function () {
+          doAction('newWindow');
+        }
+      },
+      {
+        label: 'Close Window',
+        click: function () {
+          doAction('closeWindow');
+        }
+      },
+      {
+        type: 'separator'
+      },{
+        label: 'Exit',
+        click: function () {
+          app.exit();
+        }
+      }
+    ]
+  },
+  {
+    label: 'Edit',
+    submenu: [
+      {
+        label: 'Undo',
+        click: function () {
+          document.execCommand('undo');
+        }
+      },
+      {
+        label: 'Redo',
+        click: function () {
+          document.execCommand('redo');
+        }
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Cut',
+        click: function () {
+          document.execCommand('cut');
+        }
+      },
+      {
+        label: 'Copy',
+        click: function () {
+          document.execCommand('copy');
+        }
+      },
+      {
+        label: 'Paste',
+        click: function () {
+          document.execCommand('paste');
+        }
+      },
+      {
+        label: 'Select All',
+        click: function () {
+          document.execCommand('selectAll');
+        }
+      }
+    ]
+  },
+  {
+    label: 'View',
+    submenu: [
+      {
+        label: 'Reload',
+        click: function() { 
+          BrowserWindow.getFocusedWindow().reload(); 
+        }
+      },
+      {
+        label: 'Toggle DevTools',
+        click: function() {
+         BrowserWindow.getFocusedWindow().toggleDevTools();
+        }
+      },
+    ]
+  },
+  {
+    label: 'Help',
+    submenu: [
+      {
+        label: 'Documentation',
+        click: function () {
+          openHelpModal();
+        }
+      }
+    ]
+  }
+];
+
+menu = Menu.buildFromTemplate(template);
+
+Menu.setApplicationMenu(menu);
+
 var mainWindow = null;
 
 app.on('window-all-closed', function() {
@@ -37,10 +166,6 @@ ipc.on('md.file.create', function (event, arg) {
 
 ipc.on('md.file.save', function (event, arg) {
   saveFile(event, arg);
-});
-
-ipc.on('md.app.exit', function (event, arg) {
-  app.quit();
 });
 
 var filters = [
@@ -101,4 +226,9 @@ var saveFile = function (event, data) {
   } else {
     newFile(event, data.content);
   }
+};
+
+var doAction = function (action) {
+  var window = BrowserWindow.getFocusedWindow();
+  window.webContents.send('menu.' + action + '.do');
 };

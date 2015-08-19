@@ -1,134 +1,6 @@
 var remote = require('remote');
-var Menu = remote.require('menu');
 var ipc = require('ipc');
 var BrowserWindow = remote.require('browser-window');
-
-var file_path = '';
-
-var template = [
-  {
-    label: 'File',
-    submenu: [
-      {
-        label: 'New File',
-        click: function () {
-          newFile();
-        }
-      },
-      {
-        label: 'Open File',
-        click: function () {
-          openFile();
-        }
-      },
-      {
-        label: 'Save',
-        click: function () {
-          saveFile(file_path, $('#wmd-input').val());
-        }
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'New Window',
-        click: function () {
-          newWindow();
-        }
-      },
-      {
-        label: 'Close Window',
-        click: function () {
-          closeWindow();
-        }
-      },
-      {
-        type: 'separator'
-      },{
-        label: 'Exit',
-        click: function () {
-          exit();
-        }
-      }
-    ]
-  },
-  {
-    label: 'Edit',
-    submenu: [
-      {
-        label: 'Undo',
-        click: function () {
-          document.execCommand('undo');
-        }
-      },
-      {
-        label: 'Redo',
-        click: function () {
-          document.execCommand('redo');
-        }
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Cut',
-        click: function () {
-          document.execCommand('cut');
-        }
-      },
-      {
-        label: 'Copy',
-        click: function () {
-          document.execCommand('copy');
-        }
-      },
-      {
-        label: 'Paste',
-        click: function () {
-          document.execCommand('paste');
-        }
-      },
-      {
-        label: 'Select All',
-        click: function () {
-          document.execCommand('selectAll');
-        }
-      }
-    ]
-  },
-  {
-    label: 'View',
-    submenu: [
-      {
-        label: 'Reload',
-        click: function() { 
-          remote.getCurrentWindow().reload(); 
-        }
-      },
-      {
-        label: 'Toggle DevTools',
-        click: function() {
-         remote.getCurrentWindow().toggleDevTools();
-        }
-      },
-    ]
-  },
-  {
-    label: 'Help',
-    submenu: [
-      {
-        label: 'Documentation',
-        click: function () {
-          openHelpModal();
-        }
-      }
-    ]
-  }
-];
-
-menu = Menu.buildFromTemplate(template);
-
-Menu.setApplicationMenu(menu);
 
 window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.js');
 
@@ -168,10 +40,6 @@ var closeWindow = function () {
   remote.getCurrentWindow().close();
 };
 
-var exit = function () {
-  ipc.send('md.app.exit');
-};
-
 ipc.on('md.file.read.finish', function (event, result) {
   $('#wmd-input').val(result.data);
   file_path = result.filePath;
@@ -192,6 +60,26 @@ ipc.on('md.file.create.success', function (event, filePath) {
   } else {
     openFile(filePath);
   }
+});
+
+ipc.on('menu.newFile.do', function () {
+  newFile();
+});
+
+ipc.on('menu.openFile.do', function () {
+  openFile();
+});
+
+ipc.on('menu.saveFile.do', function () {
+  saveFile(file_path, $('#wmd-input').val());
+});
+
+ipc.on('menu.newWindow.do', function () {
+  newWindow();
+});
+
+ipc.on('menu.closeWindow.do', function () {
+  closeWindow();
 });
 
 // read md if filePath passed.
