@@ -50,8 +50,6 @@ $(document).ready(function () {
     //init preview area
     doPreview();
 
-    //var converter = Markdown.getSanitizingConverter();
-
     var converter = Markdown.getSanitizingConverter();
 
     converter.hooks.chain('preConversion', function (text) {

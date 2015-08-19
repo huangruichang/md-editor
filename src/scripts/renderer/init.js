@@ -184,7 +184,11 @@ ipc.on('md.file.read.finish', function (event, result) {
 
 ipc.on('md.file.create.success', function (event, filePath) {
   if (file_path) {
-    newWindow(filePath);
+    if (file_path === filePath) {
+      openFile(filePath);
+    } else {
+      newWindow(filePath);
+    }
   } else {
     openFile(filePath);
   }
@@ -195,5 +199,5 @@ var url = window.location.href;
 if (url.indexOf('?') > 0) {
   var index = url.indexOf('filePath=');
   var target = url.substring(index + 9, url.length);
-  openFile(target);
+  openFile(decodeURIComponent(target));
 }

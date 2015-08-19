@@ -80,21 +80,11 @@ var newFile = function (event, arg) {
     filters
   });
   if (filePath) {
-    fs.exists(filePath, function (exists) {
-      if (exists) {
-        var msg = 'file: ' + filePath + ' already exists!';
-        dialog.showMessageBox({
-          type: 'info',
-          message: msg,
-          buttons: []
-        });
-      }
       var content = arg || '';
       fs.writeFile(filePath, content, function (err, data) {
         if (err) throw err;
         event.sender.send('md.file.create.success', '', filePath);
       });
-    });
   }
 };
 
