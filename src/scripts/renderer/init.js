@@ -29,7 +29,7 @@ var saveFile = function (file_path, content) {
 var newWindow = function (path) {
   var win = new BrowserWindow({
     "width": 1280,
-    "height": 800,
+    "height": 720,
     "center": true
   });
   var url = 'file://../' + __dirname + '/index.html' + (path ? '?filePath=' + path : '');

@@ -44,7 +44,7 @@ $(document).ready(function () {
     var doPreview = _.throttle(function () {
         var $preview = $('#pagedown-preview');
         var $textarea = $('#wmd-input');
-        $preview.html(marked($textarea.val(), {renderer: renderer}));
+        $preview.html(marked($textarea.val(), {renderer: renderer, breaks: true}));
     }, 1000);
 
     //init preview area

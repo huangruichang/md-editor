@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var electron = require('gulp-electron');
 var gulpAtom = require('gulp-atom');
 
 gulp.task('atom', function () {
