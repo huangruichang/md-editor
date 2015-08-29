@@ -16,6 +16,13 @@ a desktop md-editor based on pagedown-for-coding and electron.
 
 # Dependencies
 
+ - [gulp][4]
+ - [gulp-atom][5]
+ - [Font-Awesome][6]
+ - [jquery][7]
+ - [lodash][8]
+ - [marked][9]
+ - [pagedown-for-coding][10]
 
 # Build
 ````
@@ -61,3 +68,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   [1]: https://dn-coding-net-production-pp.qbox.me/8c88b5d1-f337-41e9-a454-26db556b6058.png
   [2]: http://7ktv7s.com1.z0.glb.clouddn.com/win32-ia32.zip
   [3]: http://7ktv7s.com1.z0.glb.clouddn.com/darwin-x64.zip
+  [4]: https://github.com/gulpjs/gulp
+  [5]: https://github.com/xeodou/gulp-atom
+  [6]: https://github.com/FortAwesome/Font-Awesome
+  [7]: https://github.com/jquery/jquery
+  [8]: https://github.com/lodash/lodash
+  [9]: https://github.com/chjj/marked
+  [10]: https://github.com/bluishoul/PageDown
