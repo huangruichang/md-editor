@@ -2,7 +2,7 @@ var remote = require('remote');
 var ipc = require('ipc');
 var BrowserWindow = remote.require('browser-window');
 
-window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.js');
+window.$ = window.jQuery = require('../bower_components/jquery/dist/jquery.js');
 
 var $ = window.$;
 
