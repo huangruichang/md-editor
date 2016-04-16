@@ -2,7 +2,7 @@ var app = require('app');
 var BrowserWindow = require('browser-window');  
 var ipc = require('ipc');
 var dialog = require('dialog');
-var fs = require('fs');
+var fs = require('fs-extra'); // 为了添加一个npm依赖 @ES
 
 require('crash-reporter').start();
 
