@@ -99,9 +99,12 @@ $(document).ready(function () {
             }
 		}
         if (event.keyCode == 83) {
-            if (event.ctrlKey) {
+            if (event.ctrlKey || event.metaKey) {
                 saveFile(file_path, $('#wmd-input').val());
             }
+        }
+        if (event.keyCode == 65 && event.metaKey) {
+            document.execCommand('selectAll');
         }
 	});
 

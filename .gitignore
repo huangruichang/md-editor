@@ -1,6 +1,6 @@
 .idea/
 node_modules
-node_modules
-bower_components
+src/node_modules
+src/bower_components
 cache
 release

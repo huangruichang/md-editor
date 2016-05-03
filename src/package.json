@@ -1,0 +1,8 @@
+{
+  "name": "md-editor",
+  "version": "0.0.0",
+  "main": "main.js",
+  "dependencies": {
+    "fs-extra": "^0.27.0"
+  }
+}

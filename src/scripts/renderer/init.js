@@ -2,7 +2,7 @@ var remote = require('remote');
 var ipc = require('ipc');
 var BrowserWindow = remote.require('browser-window');
 
-window.$ = window.jQuery = require('../bower_components/jquery/dist/jquery.js');
+window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.js');
 
 var $ = window.$;
 
@@ -80,6 +80,34 @@ ipc.on('menu.newWindow.do', function () {
 
 ipc.on('menu.closeWindow.do', function () {
   closeWindow();
+});
+
+ipc.on('menu.openHelpModal.do', function () {
+  openHelpModal();
+});
+
+ipc.on('menu.redo.do', function () {
+  document.execCommand('redo');
+});
+
+ipc.on('menu.undo.do', function () {
+  document.execCommand('undo');
+});
+
+ipc.on('menu.cut.do', function () {
+  document.execCommand('cut');
+});
+
+ipc.on('menu.copy.do', function () {
+  document.execCommand('copy');
+});
+
+ipc.on('menu.paste.do', function () {
+  document.execCommand('paste');
+});
+
+ipc.on('menu.selectAll.do', function () {
+  document.execCommand('selectAll');
 });
 
 // read md if filePath passed.

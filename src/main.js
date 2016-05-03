@@ -10,138 +10,12 @@ var Menu = require('menu');
 
 var file_path = '';
 
-var template = [
-  {
-    label: 'File',
-    submenu: [
-      {
-        label: 'New File',
-        click: function () {
-          doAction('newFile');
-        }
-      },
-      {
-        label: 'Open File',
-        click: function () {
-          doAction('openFile');
-        }
-      },
-      {
-        label: 'Save',
-        click: function () {
-          doAction('saveFile');
-        }
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'New Window',
-        click: function () {
-          doAction('newWindow');
-        }
-      },
-      {
-        label: 'Close Window',
-        click: function () {
-          doAction('closeWindow');
-        }
-      },
-      {
-        type: 'separator'
-      },{
-        label: 'Exit',
-        click: function () {
-          app.exit();
-        }
-      }
-    ]
-  },
-  {
-    label: 'Edit',
-    submenu: [
-      {
-        label: 'Undo',
-        click: function () {
-          document.execCommand('undo');
-        }
-      },
-      {
-        label: 'Redo',
-        click: function () {
-          document.execCommand('redo');
-        }
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Cut',
-        click: function () {
-          document.execCommand('cut');
-        }
-      },
-      {
-        label: 'Copy',
-        click: function () {
-          document.execCommand('copy');
-        }
-      },
-      {
-        label: 'Paste',
-        click: function () {
-          document.execCommand('paste');
-        }
-      },
-      {
-        label: 'Select All',
-        click: function () {
-          document.execCommand('selectAll');
-        }
-      }
-    ]
-  },
-  {
-    label: 'View',
-    submenu: [
-      {
-        label: 'Reload',
-        click: function() { 
-          BrowserWindow.getFocusedWindow().reload(); 
-        }
-      },
-      {
-        label: 'Toggle DevTools',
-        click: function() {
-         BrowserWindow.getFocusedWindow().toggleDevTools();
-        }
-      },
-    ]
-  },
-  {
-    label: 'Help',
-    submenu: [
-      {
-        label: 'Documentation',
-        click: function () {
-          openHelpModal();
-        }
-      }
-    ]
-  }
-];
-
-menu = Menu.buildFromTemplate(template);
-
-Menu.setApplicationMenu(menu);
-
 var mainWindow = null;
 
 app.on('window-all-closed', function() {
-  if (process.platform != 'darwin') {
-    app.quit();
-  }
+  app.quit();
 });
+
 
 app.on('ready', function() {
   mainWindow = new BrowserWindow({
@@ -154,6 +28,180 @@ app.on('ready', function() {
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
+
+
+  var template = [
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'New File',
+          click: function () {
+            doAction('newFile');
+          }
+        },
+        {
+          label: 'Open File',
+          click: function () {
+            doAction('openFile');
+          }
+        },
+        {
+          label: 'Save',
+          click: function () {
+            doAction('saveFile');
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'New Window',
+          click: function () {
+            doAction('newWindow');
+          }
+        },
+        {
+          label: 'Close Window',
+          click: function () {
+            doAction('closeWindow');
+          }
+        },
+        {
+          type: 'separator'
+        },{
+          label: 'Exit',
+          click: function () {
+            app.exit(0);
+          }
+        }
+      ]
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        {
+          label: 'Undo',
+          click: function () {
+            doAction('undo');
+          }
+        },
+        {
+          label: 'Redo',
+          click: function () {
+            doAction('redo');
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Cut',
+          click: function () {
+            doAction('cut');
+          }
+        },
+        {
+          label: 'Copy',
+          click: function () {
+            // document.execCommand('copy')
+            doAction('copy');
+          }
+        },
+        {
+          label: 'Paste',
+          click: function () {
+            // document.execCommand('paste');
+            doAction('paste');
+          }
+        },
+        {
+          label: 'Select All',
+          click: function () {
+            // document.execCommand('selectAll');
+            doAction('selectAll');
+          }
+        }
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        {
+          label: 'Reload',
+          click: function() {
+            //BrowserWindow.getFocusedWindow().reload();
+          }
+        },
+        {
+          label: 'Toggle DevTools',
+          click: function() {
+            BrowserWindow.getFocusedWindow().toggleDevTools();
+          }
+        },
+      ]
+    },
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'Documentation',
+          click: function () {
+            doAction('openHelpModal')
+          }
+        }
+      ]
+    }
+  ];
+
+  if (process.platform == 'darwin') {
+    var name = app.getName();
+    template.unshift({
+      label: name,
+      submenu: [
+        {
+          label: 'About ' + name,
+          role: 'about'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Services',
+          role: 'services',
+          submenu: []
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Hide ' + name,
+          accelerator: 'Command+H',
+          role: 'hide'
+        },
+        {
+          label: 'Hide Others',
+          accelerator: 'Command+Alt+H',
+          role: 'hideothers'
+        },
+        {
+          label: 'Show All',
+          role: 'unhide'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Quit',
+          accelerator: 'Command+Q',
+          click: function() { app.exit(0); }
+        },
+      ]
+    })
+  }
+
+  var menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 });
 
 ipc.on('md.file.open', function (event, arg) {
