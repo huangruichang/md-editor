@@ -1,7 +1,6 @@
 var remote = require('remote');
 var ipc = require('ipc');
 var BrowserWindow = remote.require('browser-window');
-
 window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.js');
 
 var $ = window.$;
@@ -16,6 +15,10 @@ var newFile = function () {
 
 var openFile = function (target) {
   ipc.send('md.file.open', target);
+};
+
+var createMarkPPT = function () {
+  ipc.send('md.markppt.create');
 };
 
 var saveFile = function (file_path, content) {
@@ -108,6 +111,10 @@ ipc.on('menu.paste.do', function () {
 
 ipc.on('menu.selectAll.do', function () {
   document.execCommand('selectAll');
+});
+
+ipc.on('menu.createMarkPPT.do', function (event, filePath) {
+  createMarkPPT();
 });
 
 // read md if filePath passed.

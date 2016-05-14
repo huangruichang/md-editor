@@ -103,9 +103,6 @@ $(document).ready(function () {
                 saveFile(file_path, $('#wmd-input').val());
             }
         }
-        if (event.keyCode == 65 && event.metaKey) {
-            document.execCommand('selectAll');
-        }
 	});
 
     //help button

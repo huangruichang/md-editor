@@ -3,6 +3,8 @@ var BrowserWindow = require('browser-window');
 var ipc = require('ipc');
 var dialog = require('dialog');
 var fs = require('fs-extra'); // 为了添加一个npm依赖 @ES
+var markppt = require('markppt');
+var path = require('path');
 
 require('crash-reporter').start();
 
@@ -84,13 +86,17 @@ app.on('ready', function() {
           label: 'Undo',
           click: function () {
             doAction('undo');
-          }
+          },
+          accelerator: 'CmdOrCtrl+Z',
+          role: 'undo'
         },
         {
           label: 'Redo',
           click: function () {
             doAction('redo');
-          }
+          },
+          accelerator: 'Shift+CmdOrCtrl+Z',
+          role: 'redo',
         },
         {
           type: 'separator'
@@ -99,27 +105,41 @@ app.on('ready', function() {
           label: 'Cut',
           click: function () {
             doAction('cut');
-          }
+          },
+          accelerator: 'CmdOrCtrl+X',
+          role: 'cut'
         },
         {
           label: 'Copy',
           click: function () {
-            // document.execCommand('copy')
             doAction('copy');
-          }
+          },
+          accelerator: 'CmdOrCtrl+C',
+          role: 'copy'
         },
         {
           label: 'Paste',
           click: function () {
-            // document.execCommand('paste');
             doAction('paste');
-          }
+          },
+          accelerator: 'CmdOrCtrl+V',
+          role: 'paste'
         },
         {
           label: 'Select All',
           click: function () {
-            // document.execCommand('selectAll');
             doAction('selectAll');
+          },
+          accelerator: 'CmdOrCtrl+A',
+          role: 'selectall'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Create MarkPPT',
+          click: function () {
+            doAction('createMarkPPT');
           }
         }
       ]
@@ -130,7 +150,7 @@ app.on('ready', function() {
         {
           label: 'Reload',
           click: function() {
-            //BrowserWindow.getFocusedWindow().reload();
+            BrowserWindow.getFocusedWindow().reload();
           }
         },
         {
@@ -216,10 +236,17 @@ ipc.on('md.file.save', function (event, arg) {
   saveFile(event, arg);
 });
 
+ipc.on('md.markppt.create', function (event, arg) {
+  createMarkPPT(event)
+});
+
 var filters = [
     {
       name: 'Markdown',
       extensions: ['md']
+    }, {
+      name: 'HTML',
+      extensions: ['html']
     }
 ];
 
@@ -237,6 +264,26 @@ var openFile = function (event, arg) {
     if (!(filePath instanceof Array)) {
       filePath = [filePath];
     }
+    if (filePath[0].indexOf('.html') != -1) {
+
+      var pptWindow = new BrowserWindow({
+        "width": 800,
+        "height": 640,
+        "center": true,
+        "webPreferences": {
+          "preload": __dirname + '/scripts/renderer/preload.js'
+        }
+      });
+      pptWindow.toggleDevTools();
+      pptWindow.loadUrl('file://' + filePath[0]);
+      pptWindow.on('closed', function() {
+        pptWindow = null;
+      });
+      pptWindow.setAlwaysOnTop(true);
+      return;
+    }
+
+    file_path = filePath;
     fs.readFile(filePath[0], function (err, data) {
       if (err) throw err;
       var result = {
@@ -274,6 +321,11 @@ var saveFile = function (event, data) {
   } else {
     newFile(event, data.content);
   }
+};
+
+var createMarkPPT = function (event) {
+  if (!file_path) return;
+  markppt.build(file_path, {})
 };
 
 var doAction = function (action) {
