@@ -270,11 +270,8 @@ var openFile = function (event, arg) {
         "width": 800,
         "height": 640,
         "center": true,
-        "webPreferences": {
-          "preload": __dirname + '/scripts/renderer/preload.js'
-        }
+        "nodeIntegration": false
       });
-      pptWindow.toggleDevTools();
       pptWindow.loadUrl('file://' + filePath[0]);
       pptWindow.on('closed', function() {
         pptWindow = null;
