@@ -1,14 +1,13 @@
-var app = require('app'); 
-var BrowserWindow = require('browser-window');  
-var ipc = require('ipc');
-var dialog = require('dialog');
+var electron = require('electron');
+var app = electron.app; 
+var BrowserWindow = electron.BrowserWindow;  
+var ipc = electron.ipcMain;
+var dialog = electron.dialog;
 var fs = require('fs-extra'); // 为了添加一个npm依赖 @ES
 var markppt = require('markppt');
 var path = require('path');
 
-require('crash-reporter').start();
-
-var Menu = require('menu');
+var Menu = electron.Menu;
 
 var file_path = '';
 
@@ -26,7 +25,7 @@ app.on('ready', function() {
   	"center": true
   });
 
-  mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/index.html');
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
@@ -270,9 +269,11 @@ var openFile = function (event, arg) {
         "width": 800,
         "height": 640,
         "center": true,
-        "nodeIntegration": false
+        "webPreferences": {
+          "nodeIntegration": false
+        }
       });
-      pptWindow.loadUrl('file://' + filePath[0]);
+      pptWindow.loadURL('file://' + filePath[0]);
       pptWindow.on('closed', function() {
         pptWindow = null;
       });
@@ -283,11 +284,12 @@ var openFile = function (event, arg) {
     file_path = filePath;
     fs.readFile(filePath[0], function (err, data) {
       if (err) throw err;
+
       var result = {
         filePath: filePath[0],
         data: data ? data.toString() : ''
       };
-      event.sender.send('md.file.read.finish', '', result);
+      event.sender.send('md.file.read.finish', result);
     });
   }
 };
@@ -322,7 +324,7 @@ var saveFile = function (event, data) {
 
 var createMarkPPT = function (event) {
   if (!file_path) return;
-  markppt.build(file_path, {})
+  markppt.build(file_path[0], {})
 };
 
 var doAction = function (action) {

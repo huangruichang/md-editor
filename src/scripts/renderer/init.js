@@ -1,6 +1,7 @@
-var remote = require('remote');
-var ipc = require('ipc');
-var BrowserWindow = remote.require('browser-window');
+var electron = require('electron');
+var remote = electron.remote;
+var ipc = electron.ipcRenderer;
+var BrowserWindow = remote.BrowserWindow;
 window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.js');
 
 var $ = window.$;
@@ -44,6 +45,7 @@ var closeWindow = function () {
 };
 
 ipc.on('md.file.read.finish', function (event, result) {
+  console.log(result)
   $('#wmd-input').val(result.data);
   file_path = result.filePath;
   content = result.data;
